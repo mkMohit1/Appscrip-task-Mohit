@@ -1,0 +1,240 @@
+/* src/app/page.module.css */
+.title {
+  text-align: center;
+  margin: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  text-align: center;
+}
+
+.card img {
+  height: 150px;
+  object-fit: contain;
+}
+.intro {
+  text-align: center;
+  margin: 4rem 2rem 2rem;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.intro p {
+  font-size: 1rem;
+  color: #333;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  line-height: 1.6;
+}
+.filterBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  margin: 0 2rem;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.left .showtext1{
+    display: none;
+}
+.left .showtext2{
+  display: block;
+}
+.showFilter {
+  color: #777;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+  line-height: 0;
+}
+
+.right {
+  font-weight: bold;
+  cursor: pointer;
+}
+.sortWrapper {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sortLabel {
+  padding: 0.5rem 1rem;
+}
+
+.dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: white;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 200px;
+  z-index: 10;
+}
+
+.dropdownItem {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.dropdownItem:hover {
+  background: #f5f5f5;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.check {
+  margin-right: 8px;
+  color: #111;
+}
+
+/* filter */
+.ProductsContainer{
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: fit-content;
+  padding: 0 1rem;
+}
+.sidebarOverlay {
+  /* position: fixed; */
+  width: fit-content;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar {
+  background: white;
+  width: 300px;
+  height: 100%;
+  padding: 1rem;
+  overflow-y: auto;
+  right: 0;
+  top: 0;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.hideFilter {
+  color: gray;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.filterSection {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.filterSection h4 {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filterSection label {
+  display: block;
+  margin-left: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+.disabledHeading {
+  color: #bbb;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.selectActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.selectBtn {
+  color: #0070f3;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+
+
+@media (max-width: 768px) {
+  .intro h1 {
+    font-size: 1.8rem;
+  }
+
+  .intro p {
+    font-size: 0.95rem;
+    padding: 0 1rem;
+  }
+  .filterBar {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1rem;
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .left .showtext1{
+    display: none;
+  }
+  .left .showtext2{
+    display: block;
+  }
+  .showFilter {
+    display: none; /* Hide long "SHOW FILTER" text */
+  }
+
+  .right {
+    border-left: 1px solid #ccc;
+    padding-left: 1rem;
+    margin-left: 1rem;
+  }
+}
