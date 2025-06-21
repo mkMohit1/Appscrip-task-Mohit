@@ -124,7 +124,7 @@ export default function Home() {
       }
     });
 
-    let sorted = [...filtered];
+    const sorted = [...filtered]; // Changed 'let' to 'const'
 
     switch (selectedSort) {
       case 'RECOMMENDED':
