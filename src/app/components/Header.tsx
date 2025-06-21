@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import styles from './Header.module.css'
-import { FaHeart, FaShoppingBag, FaUser, FaSearch, FaGlobe, FaBars } from 'react-icons/fa'
+import { FaHeart, FaShoppingBag, FaUser, FaSearch, FaBars } from 'react-icons/fa'
 
 const Header = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);

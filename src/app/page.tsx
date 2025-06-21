@@ -22,6 +22,14 @@ const headings = [
   "Pattern"
 ];
 
+type Product = {
+  id: number
+  title: string
+  image: string
+  category: string
+  // add more if needed
+}
+
 const filterOptions: Record<string, string[]> = {
   "Customizable": [],
   "Ideal For": ["Men", "Women", "Baby & Kids"],
@@ -183,7 +191,7 @@ const unselectAllOptions = (heading: string) => {
         )}
 
         <div className={styles.grid}>
-          {products.map((product: any) => (
+          {products.map((product: Product) => (
             <div key={product.id} className={styles.card}>
               <img src={product.image} alt={product.title} />
               <h2>{product.title}</h2>
