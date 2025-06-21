@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import styles from './page.module.css';
 
 const sortOptions = [
@@ -27,7 +27,7 @@ type Product = {
   title: string
   image: string
   category: string
-  // add more if needed
+  price: number
 }
 
 const filterOptions: Record<string, string[]> = {
@@ -43,7 +43,7 @@ const filterOptions: Record<string, string[]> = {
 };
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState('RECOMMENDED');
   const [showSidebar, setShowSidebar] = useState(false);
@@ -65,38 +65,38 @@ export default function Home() {
   };
 
   const toggleOption = (heading: string, option: string) => {
-  setSelectedFilters(prev => ({
-    ...prev,
-    [heading]: {
-      ...prev[heading],
-      [option]: !prev[heading]?.[option]
-    }
-  }));
-};
+    setSelectedFilters(prev => ({
+      ...prev,
+      [heading]: {
+        ...prev[heading],
+        [option]: !prev[heading]?.[option]
+      }
+    }));
+  };
 
-const selectAllOptions = (heading: string) => {
-  const allOptions = filterOptions[heading].reduce((acc, option) => {
-    acc[option] = true;
-    return acc;
-  }, {} as Record<string, boolean>);
+  const selectAllOptions = (heading: string) => {
+    const allOptions = filterOptions[heading].reduce((acc, option) => {
+      acc[option] = true;
+      return acc;
+    }, {} as Record<string, boolean>);
 
-  setSelectedFilters(prev => ({
-    ...prev,
-    [heading]: allOptions
-  }));
-};
+    setSelectedFilters(prev => ({
+      ...prev,
+      [heading]: allOptions
+    }));
+  };
 
-const unselectAllOptions = (heading: string) => {
-  const noneOptions = filterOptions[heading].reduce((acc, option) => {
-    acc[option] = false;
-    return acc;
-  }, {} as Record<string, boolean>);
+  const unselectAllOptions = (heading: string) => {
+    const noneOptions = filterOptions[heading].reduce((acc, option) => {
+      acc[option] = false;
+      return acc;
+    }, {} as Record<string, boolean>);
 
-  setSelectedFilters(prev => ({
-    ...prev,
-    [heading]: noneOptions
-  }));
-};
+    setSelectedFilters(prev => ({
+      ...prev,
+      [heading]: noneOptions
+    }));
+  };
 
 
   useEffect(() => {
@@ -104,6 +104,50 @@ const unselectAllOptions = (heading: string) => {
       .then(res => res.json())
       .then(data => setProducts(data));
   }, []);
+
+  const filteredAndSortedProducts = useMemo(() => {
+    let filtered = products;
+
+    Object.entries(selectedFilters).forEach(([heading, options]) => {
+      const activeOptions = Object.keys(options).filter(option => options[option]);
+      if (activeOptions.length > 0) {
+        if (heading === "Ideal For") {
+          filtered = filtered.filter(product =>
+            activeOptions.some(option => {
+              if (option === "Men" && product.category === "men's clothing") return true;
+              if (option === "Women" && product.category === "women's clothing") return true;
+              if (option === "Baby & Kids" && product.category === "jewelery") return true;
+              return false;
+            })
+          );
+        }
+      }
+    });
+
+    let sorted = [...filtered];
+
+    switch (selectedSort) {
+      case 'RECOMMENDED':
+        sorted.sort((a, b) => a.id - b.id);
+        break;
+      case 'NEWEST FIRST':
+        sorted.sort((a, b) => b.id - a.id);
+        break;
+      case 'POPULAR':
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case 'PRICE : HIGH TO LOW':
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case 'PRICE : LOW TO HIGH':
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      default:
+        break;
+    }
+    return sorted;
+  }, [products, selectedFilters, selectedSort]);
+
 
   return (
     <main>
@@ -117,7 +161,7 @@ const unselectAllOptions = (heading: string) => {
 
       <section className={styles.filterBar}>
         <div className={styles.left}>
-          <strong className={styles.showtext1}>3425 ITEMS</strong>
+          <strong className={styles.showtext1}>{filteredAndSortedProducts.length} ITEMS</strong>
           <strong className={styles.showtext2}>FILTER</strong>
           <span className={styles.showFilter} onClick={() => setShowSidebar(prev => !prev)}>
             <span className={styles.arrow}>{showSidebar ? "<" : ">"}</span>
@@ -164,7 +208,7 @@ const unselectAllOptions = (heading: string) => {
                     >
                       {heading.toUpperCase()} <span>{hasOptions ? (isOpen ? '▾' : '▸') : '▸'}</span>
                     </h4>
-                    
+
                     {hasOptions && isOpen && (
                       <>
                         <div className={styles.selectActions}>
@@ -191,10 +235,12 @@ const unselectAllOptions = (heading: string) => {
         )}
 
         <div className={styles.grid}>
-          {products.map((product: Product) => (
+          {filteredAndSortedProducts.map((product: Product) => (
             <div key={product.id} className={styles.card}>
               <img src={product.image} alt={product.title} />
-              <h2>{product.title}</h2>
+             <h2 title={product.title}>
+              {product.title.length > 18 ? `${product.title.slice(0, 18)}...` : product.title}
+            </h2>
               <p>{product.category}</p>
             </div>
           ))}

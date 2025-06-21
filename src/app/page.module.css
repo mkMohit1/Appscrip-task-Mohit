@@ -1,4 +1,3 @@
-/* src/app/page.module.css */
 .title {
   text-align: center;
   margin: 2rem;
@@ -9,18 +8,47 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   padding: 2rem;
+  flex-grow: 1;
 }
 
 .card {
   border: 1px solid #ccc;
   padding: 1rem;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 300px;
+  justify-content: space-between;
 }
 
 .card img {
-  height: 150px;
+  height: 200px;
+  width: 200px;
   object-fit: contain;
+  margin-bottom: 1rem;
 }
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.card p {
+  font-size: 0.85rem;
+  color: #555;
+  text-align: center;
+  margin-top: auto;
+}
+
 .intro {
   text-align: center;
   margin: 4rem 2rem 2rem;
@@ -39,6 +67,7 @@
   margin: 1rem auto 0;
   line-height: 1.6;
 }
+
 .filterBar {
   display: flex;
   justify-content: space-between;
@@ -55,10 +84,10 @@
   align-items: center;
   gap: 1.5rem;
 }
-.left .showtext1{
-    display: none;
+.left .showtext1 {
+  display: none;
 }
-.left .showtext2{
+.left .showtext2 {
   display: block;
 }
 .showFilter {
@@ -79,6 +108,7 @@
   font-weight: bold;
   cursor: pointer;
 }
+
 .sortWrapper {
   position: relative;
   display: inline-block;
@@ -120,28 +150,23 @@
   color: #111;
 }
 
-/* filter */
-.ProductsContainer{
+.ProductsContainer {
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  width: fit-content;
   padding: 0 1rem;
 }
 .sidebarOverlay {
-  /* position: fixed; */
   width: fit-content;
-  background: rgba(0, 0, 0, 0.3);
 }
 
 .sidebar {
   background: white;
   width: 300px;
-  height: 100%;
+  height: auto;
   padding: 1rem;
   overflow-y: auto;
-  right: 0;
-  top: 0;
+  border-right: 1px solid #eee;
 }
 
 .sidebarHeader {
@@ -198,9 +223,64 @@
   font-size: 0.85rem;
 }
 
+@media (min-width: 431px) and (max-width: 770px) {
+  .ProductsContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
 
+  .sidebarOverlay {
+    width: 100%;
+  }
 
-@media (max-width: 768px) {
+  .sidebar {
+    width: 90%;
+    margin: 0 auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    max-height: 40vh;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 1rem 0.5rem;
+    width: 95%;
+  }
+
+  .filterBar {
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0 1rem;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+
+  .right {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid #ccc;
+    padding-top: 0.5rem;
+  }
+
+  .left .showtext1 {
+    display: block;
+  }
+  .left .showtext2 {
+    display: none;
+  }
+  .showFilter {
+    display: flex;
+  }
+}
+
+@media (max-width: 430px) {
   .intro h1 {
     font-size: 1.8rem;
   }
@@ -210,7 +290,7 @@
     padding: 0 1rem;
   }
   .filterBar {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     padding: 1rem 0;
@@ -221,20 +301,66 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    width: 100%;
+    justify-content: center;
   }
-  .left .showtext1{
+  .left .showtext1 {
     display: none;
   }
-  .left .showtext2{
+  .left .showtext2 {
     display: block;
   }
   .showFilter {
-    display: none; /* Hide long "SHOW FILTER" text */
+    display: none;
   }
 
   .right {
-    border-left: 1px solid #ccc;
-    padding-left: 1rem;
-    margin-left: 1rem;
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+  }
+
+  .ProductsContainer {
+    flex-direction: column;
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
+
+  .sidebarOverlay {
+    width: 100%;
+  }
+
+  .sidebar {
+    width: 95%;
+    margin: 0 auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    max-height: 50vh;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    padding: 1rem 0.2rem;
+  }
+
+  .card {
+    height: 280px;
+  }
+
+  .card img {
+    height: 120px;
+    width: 120px;
+  }
+
+  .card h2 {
+    font-size: 0.9rem;
+  }
+
+  .card p {
+    font-size: 0.75rem;
   }
 }
